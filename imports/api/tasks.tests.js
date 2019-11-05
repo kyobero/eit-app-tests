@@ -113,27 +113,27 @@ if (Meteor.isServer) {
 
       it('can delete bulky Eits', () => {
         Eits.insert({
-          firstName : 'Mugerwa',
-          surname : 'Dan',
-          age : '26',
+          firstName: 'Mugerwa',
+          surname: 'Dan',
+          age: '26',
           country: 'UGA',
           addedBy: 'userId',
-          check:true,
+          check: true,
           createdAt: new Date(),
-              // owner: userId,
-              // username: 'tmeasday',
-            });
-            Eits.insert({
-              firstName : 'Mugerwa',
-              surname : 'Dan',
-              age : '26',
-              country: 'UGA',
-              addedBy: userId,
-              check:true,
-              createdAt: new Date(),
-                  // owner: userId,
-                  // username: 'tmeasday',
-                });
+          // owner: userId,
+          // username: 'tmeasday',
+        });
+        Eits.insert({
+          firstName: 'Mugerwa',
+          surname: 'Dan',
+          age: '26',
+          country: 'UGA',
+          addedBy: userId,
+          check: true,
+          createdAt: new Date(),
+          // owner: userId,
+          // username: 'tmeasday',
+        });
         // Find the internal implementation of the task method so we can
         // test it in isolation
         const bulkyDeleteEits = Meteor.server.method_handlers['eit.bulkDelete'];
@@ -145,10 +145,30 @@ if (Meteor.isServer) {
         bulkyDeleteEits.apply(invocation);
 
         // Verify that the method does what we expected
-        assert.equal(Eits.find().count(),  3);
-
-
+        assert.equal(Eits.find().count(), 3);
       });
+
+       // insert method tests
+       it('can update EIT', () => {
+        // Create task string
+        const firstName = 'Mugerwa';
+        const surname = 'Dan';
+        const age = '26';
+        const country = 'UGA';
+
+        // Get method
+        const updateEit = Meteor.server.method_handlers['eit.update']
+
+        // Create fake user object
+        const fakeUserObject = { userId }
+
+        // Run test
+        updateEit.apply(fakeUserObject, [eitId, { firstName, surname, age, country }])
+        assert.equal(Eits.find().count(),1)
+      });
+
+
+      
 
     });
   });
