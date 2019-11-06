@@ -24,7 +24,7 @@ Meteor.methods({
     check(eitId, String);
     check(updateObj, Object);
 
-    if (!Meteor.user() && !this.userId)
+    if (!this.userId)
       throw new Meteor.Error('You are unauthorized');
 
     const {firstName, surname, age, country} = updateObj;
